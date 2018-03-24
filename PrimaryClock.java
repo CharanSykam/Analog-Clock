@@ -13,6 +13,8 @@ public class PrimaryClock extends ClockFace implements ActionListener {
     private ClockHand secondHand;
     private ClockHand minuteHand;
     private ClockHand hourHand;
+    private int secondLength, minuteLength, hourLength, cX, cY;
+    private double di, angleFrom12, angleFrom3;
 
     public PrimaryClock(int x, int y, int width)
     {
@@ -21,7 +23,7 @@ public class PrimaryClock extends ClockFace implements ActionListener {
         this.y = y;
         this.width = width;
         this.radius = width / 2;
-        secondCounter = 1;
+        secondCounter = 0;
         minuteCounter = 1;
 
         secondHand = new ClockHand(radius, radius, radius, 250, 5, Color.RED);
@@ -46,20 +48,20 @@ public class PrimaryClock extends ClockFace implements ActionListener {
         Graphics2D g2 = (Graphics2D) g;
         super.paintComponent(g2);
 
-        int secondLength = 30;
-        int minuteLength = 50;
-        int hourLength = 60;
-        int cX = x+(width)/2;
-        int cY = y+(width)/2;
-        double di = (double)1;
-        double angleFrom12 = di/60.0*2.0*Math.PI;
-        double angleFrom3 = Math.PI/2.0-angleFrom12;
+        secondLength = 30;
+        minuteLength = 50;
+        hourLength = 60;
+        cX = x+(width)/2;
+        cY = y+(width)/2;
+        di = (double)secondCounter + (double)1;
+        angleFrom12 = di/60.0*2.0*Math.PI;
+        angleFrom3 = Math.PI/2.0-angleFrom12;
 
         GeneralPath path = new GeneralPath();
         secondHand.translate((int)(cX+Math.cos(angleFrom3)*(radius-secondLength)),
                 (int)(cY-Math.sin(angleFrom3)*(radius-secondLength)));
         secondHand.draw(g2);
-        di++;
+        secondCounter++;
         //minuteHand.draw(g2);
         //hourHand.draw(g2);
     }
