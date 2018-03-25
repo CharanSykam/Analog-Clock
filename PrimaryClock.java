@@ -1,16 +1,14 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.GeneralPath;
-import java.awt.image.BufferedImage;
 import javax.swing.*;
 
 public class MyClock extends ClockFace implements ActionListener {
-    private int x,  y, width, radius, secondCounter, minuteCounter;
+    private int x,  y, width, radius, secondCounter, minuteCounter, hourCounter;
     private ClockHand secondHand , minuteHand, hourHand;
     private int secondLength, minuteLength, hourLength, cXM, cYM, cXS, cYS, cXH, cYH;
     private double diS, angleFrom12S, angleFrom3S, angleFrom12M, angleFrom3M, angleFrom12H, angleFrom3H;
     private double dIM, dIH;
-    GeneralPath path;
 
     public MyClock(int x, int y, int width)
     {
@@ -19,14 +17,14 @@ public class MyClock extends ClockFace implements ActionListener {
         this.y = y;
         this.width = width;
         this.radius = width / 2;
-        secondCounter = 55;
-        minuteCounter = 0;
+        secondCounter = 57;
+        minuteCounter = 59;
+        hourCounter = 0;
 
-        path = new GeneralPath();
+        secondHand = new ClockHand(radius, radius, radius, 250, 4, Color.RED);
+        minuteHand = new ClockHand(radius, radius, radius, 50, 6, Color.BLACK);
+        hourHand = new ClockHand(radius, radius, radius, 50, 10, Color.BLACK);
 
-        secondHand = new ClockHand(radius, radius, radius, 250, 5, Color.RED);
-        minuteHand = new ClockHand(radius, radius, radius, 150, 5, Color.BLACK);
-        hourHand = new ClockHand(radius, radius, radius, 100, 5, Color.BLACK);
 
         Timer time = new Timer(1000, this);
         time.start();
@@ -48,7 +46,7 @@ public class MyClock extends ClockFace implements ActionListener {
         secondLength = 30;
         minuteLength = 50;
         hourLength = 60;
-        minuteHand.draw(g2);
+
         if(secondCounter <= 59)
         {
             diS = (double)secondCounter + (double)1;
@@ -62,7 +60,6 @@ public class MyClock extends ClockFace implements ActionListener {
         }
         if(secondCounter == 59)
         {
-
             dIM = (double)minuteCounter + (double)1;
             cXM = x+(width)/2;
             cYM = y+(width)/2;
@@ -75,6 +72,28 @@ public class MyClock extends ClockFace implements ActionListener {
             secondCounter = -1;
             minuteCounter++;
         }
+        if(minuteCounter == 60)
+        {
+            hourCounter = hourCounter + 4;
+            dIH = (double)hourCounter + (double)1;
+            cXH = x+(width)/2;
+            cYH = y+(width)/2;
+            angleFrom12H = dIH/60.0*2.0*Math.PI;
+            angleFrom3H = Math.PI/2.0-angleFrom12H;
+            hourHand.translate((int)(cXH+Math.cos(angleFrom3H)*(radius-minuteLength)),
+                    (int)(cYH-Math.sin(angleFrom3H)*(radius-minuteLength)));
+            hourHand.draw(g2);
+
+            minuteCounter = 0;
+        }
+
+        if(hourCounter == 60)
+        {
+            hourCounter = 0;
+        }
+
         secondCounter++;
+        minuteHand.draw(g2);
+        hourHand.draw(g2);
     }
 }
