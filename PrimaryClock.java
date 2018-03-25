@@ -48,7 +48,7 @@ public class MyClock extends ClockFace implements ActionListener {
         secondLength = 30;
         minuteLength = 50;
         hourLength = 60;
-
+        minuteHand.draw(g2);
         if(secondCounter <= 59)
         {
             diS = (double)secondCounter + (double)1;
@@ -62,6 +62,7 @@ public class MyClock extends ClockFace implements ActionListener {
         }
         if(secondCounter == 59)
         {
+
             dIM = (double)minuteCounter + (double)1;
             cXM = x+(width)/2;
             cYM = y+(width)/2;
@@ -69,15 +70,6 @@ public class MyClock extends ClockFace implements ActionListener {
             angleFrom3M = Math.PI/2.0-angleFrom12M;
             minuteHand.translate((int)(cXM+Math.cos(angleFrom3M)*(radius-minuteLength)),
                     (int)(cYM-Math.sin(angleFrom3M)*(radius-minuteLength)));
-
-            /*path.moveTo((int)(cXM+Math.cos(angleFrom3M)*(radius-minuteLength)),
-                    (int)(cYM-Math.sin(angleFrom3M)*(radius-minuteLength)));
-
-            path.lineTo((float) 250, (float) 250);
-            g2.setStroke(new BasicStroke(5));
-            g2.setColor(Color.BLACK);
-            g2.draw(path);*/
-
             minuteHand.draw(g2);
 
             secondCounter = -1;
