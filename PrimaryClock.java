@@ -19,11 +19,11 @@ public class MyClock extends ClockFace implements ActionListener {
         this.radius = width / 2;
         secondCounter = 57;
         minuteCounter = 59;
-        hourCounter = 0;
+        hourCounter = 4;
 
         secondHand = new ClockHand(radius, radius, radius, 250, 4, Color.RED);
-        minuteHand = new ClockHand(radius, radius, radius, 50, 6, Color.BLACK);
-        hourHand = new ClockHand(radius, radius, radius, 50, 10, Color.BLACK);
+        minuteHand = new ClockHand(radius, radius, radius, 50,  6, Color.BLACK);
+        hourHand = new ClockHand(radius, radius, radius, 40, 9, Color.BLACK);
 
 
         Timer time = new Timer(1000, this);
@@ -45,7 +45,7 @@ public class MyClock extends ClockFace implements ActionListener {
         super.paintComponent(g2);
         secondLength = 30;
         minuteLength = 50;
-        hourLength = 60;
+        hourLength = 80;
 
         if(secondCounter <= 59)
         {
@@ -74,14 +74,21 @@ public class MyClock extends ClockFace implements ActionListener {
         }
         if(minuteCounter == 60)
         {
-            hourCounter = hourCounter + 4;
+            if(hourCounter == 0)
+            {
+                hourCounter = hourCounter + 4;
+            }
+            else
+            {
+                hourCounter = hourCounter + 5;
+            }
             dIH = (double)hourCounter + (double)1;
             cXH = x+(width)/2;
             cYH = y+(width)/2;
             angleFrom12H = dIH/60.0*2.0*Math.PI;
             angleFrom3H = Math.PI/2.0-angleFrom12H;
-            hourHand.translate((int)(cXH+Math.cos(angleFrom3H)*(radius-minuteLength)),
-                    (int)(cYH-Math.sin(angleFrom3H)*(radius-minuteLength)));
+            hourHand.translate((int)(cXH+Math.cos(angleFrom3H)*(radius-hourLength)),
+                    (int)(cYH-Math.sin(angleFrom3H)*(radius-hourLength)));
             hourHand.draw(g2);
 
             minuteCounter = 0;
