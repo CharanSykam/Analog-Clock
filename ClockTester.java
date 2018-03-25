@@ -13,7 +13,7 @@ public class ClockTester
     {
         JFrame frame = new JFrame();
 
-        PrimaryClock clock = new PrimaryClock(0, 0, CLOCK_RADIUS);
+        MyClock clock = new MyClock(0, 0, CLOCK_RADIUS);
         frame.setLayout(new BorderLayout());
 
         JPanel topNav = new JPanel(new FlowLayout());
@@ -22,6 +22,7 @@ public class ClockTester
         frame.add(topNav, BorderLayout.NORTH);
 
         JPanel primary = new JPanel();
+        primary.setBackground(Color.YELLOW);
         primary.add(clock);
 
         frame.add(primary, BorderLayout.CENTER);
