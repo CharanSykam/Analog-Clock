@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.*;
 
@@ -20,7 +19,6 @@ public class MyClock extends ClockFace implements ActionListener {
         this.width = width;
         this.radius = width / 2;
         temp = 0;
-        Date date = new Date();
         Calendar calendar = GregorianCalendar.getInstance();
         int hour = calendar.get(Calendar.HOUR);
         int minute = calendar.get(Calendar.MINUTE);
